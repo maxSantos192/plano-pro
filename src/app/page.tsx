@@ -1,9 +1,7 @@
+import HomePage from "./home/page";
+
 function Home() {
-  return (
-    <div>
-      <h1>hello world</h1>
-    </div>
-  );
+  return <HomePage />;
 }
 
 export default Home;
