@@ -8,4 +8,11 @@ export class GradeService {
     });
     return grade;
   }
+
+  async findAll() {
+    const grades = await prisma.grade.findMany({
+      orderBy: { name: "asc" },
+    });
+    return grades;
+  }
 }

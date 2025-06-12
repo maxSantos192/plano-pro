@@ -31,4 +31,25 @@ export class GradeController {
       res.status(400).json(response);
     }
   };
+
+  findAll = async (req: Request, res: Response) => {
+    try {
+      const grades = await this.gradeService.findAll();
+
+      const response: ApiResponse = {
+        success: true,
+        data: grades,
+        message: "Grades retrieved successfully",
+      };
+
+      res.status(200).json(response);
+    } catch (error: any) {
+      const response: ApiResponse = {
+        success: false,
+        error: error.message || "An error occurred while retrieving grades",
+      };
+
+      res.status(400).json(response);
+    }
+  };
 }

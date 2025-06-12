@@ -5,5 +5,6 @@ const router = Router();
 const gradeController = new GradeController();
 
 router.post("/", gradeController.create);
+router.get("/", gradeController.findAll);
 
 export { router as gradeRoutes };
