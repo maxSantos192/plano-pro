@@ -1,4 +1,5 @@
 import Header from "../_components/header";
+import FormComponent from "./_components/form-component";
 import PreviewComponent from "./_components/preview-component";
 import UploadComponent from "./_components/upload-component";
 
@@ -15,9 +16,14 @@ function HomePage() {
           </p>
         </div>
 
-        <div className="mt-7 space-y-6">
-          <UploadComponent />
-          <PreviewComponent />
+        <div className="mt-7 flex gap-x-6">
+          <div className="flex flex-1 flex-col gap-y-6">
+            <UploadComponent />
+            <PreviewComponent />
+          </div>
+          <div className="flex-1">
+            <FormComponent />
+          </div>
         </div>
       </div>
     </>
