@@ -6,6 +6,7 @@ import { subjectRoutes } from "./subject.routes";
 
 const router = Router();
 
+router.use("/class-plans", classPlanRoutes);
 router.use("/grades", gradeRoutes);
 router.use("/durations", durationRoutes);
 router.use("/subjects", subjectRoutes);
