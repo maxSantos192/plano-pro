@@ -20,7 +20,7 @@ function PreviewComponent() {
           </p>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <Space>
             <Button>-</Button>
             <span className="text-muted">100%</span>

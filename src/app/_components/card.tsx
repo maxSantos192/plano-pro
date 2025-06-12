@@ -25,5 +25,5 @@ export function CardContent({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  return <div className={cn("px-6", className)} {...props} />;
+  return <div className={cn("space-y-4 px-6", className)} {...props} />;
 }
