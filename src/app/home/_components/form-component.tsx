@@ -11,7 +11,6 @@ const { TextArea } = Input;
 
 function FormComponent() {
   const [form] = Form.useForm();
-  const { Option } = Select;
 
   function handleSubmit(values: ClassPlan) {
     console.log("Form values:", values);
@@ -39,9 +38,9 @@ function FormComponent() {
               >
                 <Select placeholder="Selecione a disciplina">
                   {subjects.map((item) => (
-                    <Option key={item.value} value={item.value}>
+                    <Select.Option key={item.value} value={item.value}>
                       {item.label}
-                    </Option>
+                    </Select.Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -55,9 +54,9 @@ function FormComponent() {
               >
                 <Select placeholder="Selecione a série/ano">
                   {grades.map((item) => (
-                    <Option key={item.value} value={item.value}>
+                    <Select.Option key={item.value} value={item.value}>
                       {item.label}
-                    </Option>
+                    </Select.Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -75,9 +74,9 @@ function FormComponent() {
               >
                 <Select placeholder="Selecione a duração">
                   {duration.map((item) => (
-                    <option key={item.value} value={item.value}>
+                    <Select.Option key={item.value} value={item.value}>
                       {item.label}
-                    </option>
+                    </Select.Option>
                   ))}
                 </Select>
               </Form.Item>
