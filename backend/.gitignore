@@ -3,3 +3,11 @@
 
 # production
 /build
+
+# env files
+.env
+.env.local
+
+# database
+dev.db
+dev.db-journal
