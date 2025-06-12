@@ -1,4 +1,5 @@
 import Header from "../_components/header";
+import PreviewComponent from "./_components/preview-component";
 import UploadComponent from "./_components/upload-component";
 
 function HomePage() {
@@ -14,8 +15,9 @@ function HomePage() {
           </p>
         </div>
 
-        <div className="mt-7">
+        <div className="mt-7 space-y-6">
           <UploadComponent />
+          <PreviewComponent />
         </div>
       </div>
     </>
