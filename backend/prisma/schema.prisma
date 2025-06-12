@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model ClassPlan {
+  id          String    @id @default(uuid())
+  title       String
+  subjectId   Int
+  subject     Subject   @relation(fields: [subjectId], references: [id])
+  gradeId     Int
+  grade       Grade     @relation(fields: [gradeId], references: [id])
+  durationId  Int
+  duration    Duration  @relation(fields: [durationId], references: [id])
+  date        DateTime
+  objectives  String?
+  content     String?
+  methodology String?
+  resources   String?
+  evaluation  String?
+  documentId  String?
+  document    Document? @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("classPlan")
+}
+
+model Subject {
+  id         Int         @id @default(autoincrement())
+  name       String
+  classPlans ClassPlan[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subject")
+}
+
+model Grade {
+  id         Int         @id @default(autoincrement())
+  name       String
+  classPlans ClassPlan[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("grade")
+}
+
+model Duration {
+  id         Int         @id @default(autoincrement())
+  name       String
+  classPlans ClassPlan[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("duration")
+}
+
+model Document {
+  id         String      @id @default(uuid())
+  name       String
+  classPlans ClassPlan[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("document")
+}
