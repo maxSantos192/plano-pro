@@ -1,4 +1,5 @@
 import Header from "../_components/header";
+import UploadComponent from "./_components/upload-component";
 
 function HomePage() {
   return (
@@ -11,6 +12,10 @@ function HomePage() {
             Faça upload do seu plano de aula e transforme-o em um documento
             padronizado.
           </p>
+        </div>
+
+        <div className="mt-7">
+          <UploadComponent />
         </div>
       </div>
     </>
