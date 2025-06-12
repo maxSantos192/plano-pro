@@ -15,7 +15,7 @@ function PreviewComponent() {
             width={45}
             height={60}
           />
-          <p className="text-muted text-lg">
+          <p className="text-muted text-center text-lg">
             Preview do documento aparecerá aqui
           </p>
         </div>
