@@ -1,5 +1,3 @@
-import Footer from "../_components/footer";
-import Header from "../_components/header";
 import FormComponent from "./_components/form-component";
 import PreviewComponent from "./_components/preview-component";
 import UploadComponent from "./_components/upload-component";
@@ -7,7 +5,6 @@ import UploadComponent from "./_components/upload-component";
 function HomePage() {
   return (
     <>
-      <Header />
       <div className="mx-auto max-w-7xl px-4">
         <div className="mt-7 space-y-2">
           <h2 className="text-primary text-2xl">Digitalizar Plano de Aula</h2>
@@ -27,7 +24,6 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
