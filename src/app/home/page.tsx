@@ -1,3 +1,4 @@
+import Footer from "../_components/footer";
 import Header from "../_components/header";
 import FormComponent from "./_components/form-component";
 import PreviewComponent from "./_components/preview-component";
@@ -26,6 +27,7 @@ function HomePage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }
