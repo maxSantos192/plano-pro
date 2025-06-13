@@ -1,17 +1,39 @@
 "use client";
 
 import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
+import { useEffect, useState } from "react";
 
 import { ClassPlan } from "@/@types/class-plan";
+import { Option } from "@/@types/option";
 import { Card, CardContent, CardTitle } from "@/app/_components/card";
 import api from "@/lib/api";
-
-import { duration, grades, subjects } from "../_constants/academic-data";
 
 const { TextArea } = Input;
 
 function FormComponent() {
+  const [durations, setDurations] = useState<Option[]>([]);
+  const [grades, setGrades] = useState<Option[]>([]);
+  const [subjects, setSubjects] = useState<Option[]>([]);
+
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    async function fetchOptions() {
+      try {
+        const [durationsRes, gradesRes, subjectsRes] = await Promise.all([
+          api.get("/durations"),
+          api.get("/grades"),
+          api.get("/subjects"),
+        ]);
+        setDurations(durationsRes.data.data);
+        setGrades(gradesRes.data.data);
+        setSubjects(subjectsRes.data.data);
+      } catch (error) {
+        console.error("Erro ao buscar opções:", error);
+      }
+    }
+    fetchOptions();
+  }, []);
 
   async function handleSubmit(values: ClassPlan) {
     try {
@@ -47,8 +69,8 @@ function FormComponent() {
               >
                 <Select placeholder="Selecione a disciplina">
                   {subjects.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.label}
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.name}
                     </Select.Option>
                   ))}
                 </Select>
@@ -63,8 +85,8 @@ function FormComponent() {
               >
                 <Select placeholder="Selecione a série/ano">
                   {grades.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.label}
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.name}
                     </Select.Option>
                   ))}
                 </Select>
@@ -82,9 +104,9 @@ function FormComponent() {
                 ]}
               >
                 <Select placeholder="Selecione a duração">
-                  {duration.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.label}
+                  {durations.map((item) => (
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.name}
                     </Select.Option>
                   ))}
                 </Select>
