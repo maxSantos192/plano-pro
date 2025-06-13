@@ -1,19 +1,50 @@
 "use client";
 
 import { Button, Col, DatePicker, Form, Input, Row, Select } from "antd";
+import { useEffect, useState } from "react";
 
 import { ClassPlan } from "@/@types/class-plan";
+import { Option } from "@/@types/option";
 import { Card, CardContent, CardTitle } from "@/app/_components/card";
-
-import { duration, grades, subjects } from "../_constants/academic-data";
+import api from "@/lib/api";
 
 const { TextArea } = Input;
 
 function FormComponent() {
+  const [durations, setDurations] = useState<Option[]>([]);
+  const [grades, setGrades] = useState<Option[]>([]);
+  const [subjects, setSubjects] = useState<Option[]>([]);
+
   const [form] = Form.useForm();
 
-  function handleSubmit(values: ClassPlan) {
-    console.log("Form values:", values);
+  useEffect(() => {
+    async function fetchOptions() {
+      try {
+        const [durationsRes, gradesRes, subjectsRes] = await Promise.all([
+          api.get("/durations"),
+          api.get("/grades"),
+          api.get("/subjects"),
+        ]);
+        setDurations(durationsRes.data.data);
+        setGrades(gradesRes.data.data);
+        setSubjects(subjectsRes.data.data);
+      } catch (error) {
+        console.error("Erro ao buscar opções:", error);
+      }
+    }
+    fetchOptions();
+  }, []);
+
+  async function handleSubmit(values: ClassPlan) {
+    try {
+      const formattedDate = values.date.format("YYYY-MM-DD");
+      await api.post("/class-plans", {
+        ...values,
+        date: formattedDate,
+      });
+    } catch (error) {
+      console.error("Erro ao salvar o plano de aula:", error);
+    }
   }
 
   return (
@@ -22,7 +53,7 @@ function FormComponent() {
       <CardContent>
         <Form form={form} name="aula" layout="vertical" onFinish={handleSubmit}>
           <Form.Item
-            name="titulo"
+            name="title"
             label="Título da Aula"
             rules={[{ required: true, message: "Informe o título da aula" }]}
           >
@@ -32,14 +63,14 @@ function FormComponent() {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="disciplina"
+                name="subjectId"
                 label="Disciplina"
                 rules={[{ required: true, message: "Informe a disciplina" }]}
               >
                 <Select placeholder="Selecione a disciplina">
                   {subjects.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.label}
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.name}
                     </Select.Option>
                   ))}
                 </Select>
@@ -48,14 +79,14 @@ function FormComponent() {
 
             <Col span={12}>
               <Form.Item
-                name="serie"
+                name="gradeId"
                 label="Série/Ano"
                 rules={[{ required: true, message: "Informe a série/ano" }]}
               >
                 <Select placeholder="Selecione a série/ano">
                   {grades.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.label}
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.name}
                     </Select.Option>
                   ))}
                 </Select>
@@ -66,16 +97,16 @@ function FormComponent() {
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="duracao"
+                name="durationId"
                 label="Duração"
                 rules={[
                   { required: true, message: "Informe a duração da aula" },
                 ]}
               >
                 <Select placeholder="Selecione a duração">
-                  {duration.map((item) => (
-                    <Select.Option key={item.value} value={item.value}>
-                      {item.label}
+                  {durations.map((item) => (
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.name}
                     </Select.Option>
                   ))}
                 </Select>
@@ -84,35 +115,36 @@ function FormComponent() {
 
             <Col span={12}>
               <Form.Item
-                name="data"
+                name="date"
                 label="Data da Aula"
                 rules={[{ required: true, message: "Informe a data da aula" }]}
               >
                 <DatePicker
                   placeholder="dd/mm/aaaa"
+                  format="DD/MM/YYYY"
                   style={{ width: "100%" }}
                 />
               </Form.Item>
             </Col>
           </Row>
 
-          <Form.Item name="objetivos" label="Objetivos da Aula">
+          <Form.Item name="objectives" label="Objetivos da Aula">
             <TextArea placeholder="Descreva os objetivos que os alunos devem alcançar" />
           </Form.Item>
 
-          <Form.Item name="conteudo" label="Conteúdo da Programático">
+          <Form.Item name="content" label="Conteúdo da Programático">
             <TextArea placeholder="Liste os tópicos que serão abordados" />
           </Form.Item>
 
-          <Form.Item name="metodologia" label="Metodologia">
+          <Form.Item name="methodology" label="Metodologia">
             <TextArea placeholder="Descreva as estratégias e métodos de ensino" />
           </Form.Item>
 
-          <Form.Item name="recursos" label="Recursos Necessários">
+          <Form.Item name="resources" label="Recursos Necessários">
             <TextArea placeholder="Liste os materiais e recursos necessários" />
           </Form.Item>
 
-          <Form.Item name="avalicao" label="Avaliação">
+          <Form.Item name="evaluation" label="Avaliação">
             <TextArea placeholder="Descreva como será feita a avaliação do aprendizado" />
           </Form.Item>
 

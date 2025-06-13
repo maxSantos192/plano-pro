@@ -1,9 +1,11 @@
+import { Dayjs } from "dayjs";
+
 export interface ClassPlan {
   title: string;
-  subject: string;
-  grade: string;
-  duration: string;
-  date: string;
+  subjectId: number;
+  gradeId: number;
+  durationId: number;
+  date: Dayjs;
   objectives: string;
   content: string;
   methodology: string;
