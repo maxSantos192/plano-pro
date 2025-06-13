@@ -55,18 +55,25 @@ This is a React app for managing lesson plans.
 ### Installation Frontend
 
 1. Navigate to the frontend directory:
+
    ```bash
    cd frontend
    ```
+
 2. Create the .env file based on .env.example:
+
    ```bash
    copy .env.example .env
    ```
+
 3. Install dependencies:
+
    ```bash
    npm install
    ```
+
 4. Start the development server:
+
    ```bash
    npm run dev
    ```
